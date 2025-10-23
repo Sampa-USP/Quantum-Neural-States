@@ -1,0 +1,90 @@
+/* ===== Layout principal (sidebar + viewer) ===== */
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  width: 100%;
+  margin: 0 auto;
+  height: calc(100svh - 64px); /* altura útil (desconta o header) */
+  min-height: 0; /* <<< permite scroll interno dos filhos */
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  padding: 12px;
+  min-height: 0;   /* <<< permite que o .tree role */
+  height: 100%;    /* ocupa a coluna inteira do grid */
+  overflow: hidden; /* quem rola é a .tree */
+}
+
+.search {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--fg);
+  margin-bottom: 10px;
+  flex: 0 0 auto;
+}
+
+/* lista da árvore ocupa o resto da sidebar e rola */
+.tree {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;   /* <<< essencial para rolar dentro do flex */
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* ===== Viewer ===== */
+.viewer {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  overflow: hidden;
+  min-height: 0;
+  height: 100%;
+}
+
+#viewer,
+.viewer iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 12px;
+}
+
+/* ===== Container principal ===== */
+.main-wide {
+  width: 90%;
+  margin: 32px auto;
+  padding: 0 0 16px 0;
+  min-height: 0; /* <<< garante herança correta de altura */
+}
+
+/* ===== Hierarquia superior precisa liberar altura ===== */
+html, body {
+  height: 100%;
+  min-height: 0;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { order: 1; }
+  .viewer  { order: 2; min-height: 60svh; }
+
+  html, body, .layout, .viewer {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
